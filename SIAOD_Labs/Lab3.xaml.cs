@@ -370,7 +370,7 @@ namespace SIAOD_Labs
 
             return Next;
         }
-        void makeNote(int i, Note curva)
+        void makeNote(int i,  Note curva)
         {
             Particles[i].Next = curva;
             curva.c++;
@@ -385,12 +385,19 @@ namespace SIAOD_Labs
             if (curva.c > 1)
             {
       
-                for (var it = 0; it <= NotesNext.Count - 1; it++)
+                for (var it = 0; it < NotesNext.Count; it++)
                 {
  
                     if (NotesNext[it].i == curva.i && NotesNext[it].j == curva.j)
                     {
-                        ParticlesConc[it].Add(Particles[i]);
+
+
+                        if (Particles[i].Current.i != ParticlesConc[it][ParticlesConc[it].Count - 2].Current.i ||
+                            Particles[i].Current.j != ParticlesConc[it][ParticlesConc[it].Count - 2].Current.j)
+                        {
+                            ParticlesConc[it].Add(Particles[i]);
+                            curva.c--;
+                        }
                         break;
                     }
                 }
@@ -487,7 +494,7 @@ namespace SIAOD_Labs
                     {
                         if (NotesNext[i].c == 1)
                         {
-
+                           
                             NotesNext[i].Owner = ParticlesConc[i][0];
                             ParticlesConc[i][0].Current.c = 0;
                             ParticlesConc[i][0].Current.Owner = null;
@@ -504,8 +511,10 @@ namespace SIAOD_Labs
                             var chois = Lab1.random.Next(NotesNext[i].c--);
                             //MessageBox.Show(chois+" chois from "+NotesNext[i].c--);
                             //MessageBox.Show(ParticlesConc[i].Count + "");
+                            /*
                             for (var u = 0; u < NotesNext[i].c; u++)
                                 ParticlesConc[i][u].loose = true;
+                                */
                             ParticlesConc[i][chois].Current.Owner = null;
                             ParticlesConc[i][chois].loose = false;
                             NotesNext[i].Owner = ParticlesConc[i][chois];
@@ -528,6 +537,8 @@ namespace SIAOD_Labs
                             NotesNext[i].c = 0;
                         }
                     }
+                    else
+                        Particles[i].loose = true;
                 }
                 else
                     Particles[i].loose = false;
