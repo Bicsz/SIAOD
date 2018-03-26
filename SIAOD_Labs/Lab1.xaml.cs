@@ -275,6 +275,7 @@ namespace SIAOD_Labs
             for (var i = 0; i<=MyNote.Near.Count-1;i++)
                 txt += "|" + MyNote.Near[i].i + " " + MyNote.Near[i].j + "|";
             txt += "\nc = " + MyNote.c;
+
             txt += "\n\n";
             if (MyNote.Owner != null)
             {
