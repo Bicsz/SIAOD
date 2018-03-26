@@ -509,9 +509,7 @@ namespace SIAOD_Labs
             {
 
               
-                if (NotesNext[i].Owner == null)
-                {
-                   
+               
                     if (NotesNext[i].c == 1)
                     {
                         
@@ -556,9 +554,9 @@ namespace SIAOD_Labs
                             }
                         }
                         */
-                        NotesNext[i].c = 0;
+                        NotesNext[i].c--;
                     }
-                }
+                
                
                 /*
                 else
