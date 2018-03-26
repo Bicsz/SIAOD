@@ -384,7 +384,9 @@ namespace SIAOD_Labs
             }
             if (curva.c > 1)
             {
-      
+                ParticlesConc[ParticlesConc.Count - 1].Add(Particles[i]);
+
+                /*
                 for (var it = 0; it < NotesNext.Count; it++)
                 {
  
@@ -401,6 +403,7 @@ namespace SIAOD_Labs
                         break;
                     }
                 }
+                */
             }
         }
 
@@ -471,77 +474,92 @@ namespace SIAOD_Labs
 
                             //Particles[i].Current.Owner = Particles[i];
                         }
+
                         var curva = makeNext(Particles[i].Current, Particles[i].Finish, Particles[i].Path);
                         if (curva.Owner != null)
+                        {
+                            /*
                             if (!curva.Owner.loose)
                                 makeNote(i, curva);
                             else
                                 Particles[i].loose = true;
+                                */
+                            Particles[i].loose = true;
+
+                        }
                         else
                             makeNote(i, curva);
+
                     }
 
-                }
-                
-                    
-            }
-            Wait = new List<Particle>();
-            for(var i = 0; i <= NotesNext.Count - 1; i++)
-            {
-                if (!Particles[i].loose)
-                {
-                    if (NotesNext[i].Owner == null)
-                    {
-                        if (NotesNext[i].c == 1)
-                        {
-                           
-                            NotesNext[i].Owner = ParticlesConc[i][0];
-                            ParticlesConc[i][0].Current.c = 0;
-                            ParticlesConc[i][0].Current.Owner = null;
-                            ParticlesConc[i][0].Current = NotesNext[i];
-                            ParticlesConc[i][0].Path.Add(NotesNext[i]);
-                            NotesNext[i].c = 0;
-                            ParticlesConc[i][0].OKinerations++;
-                            GlobOKiterations++;
-                        }
-                        else
-                        {
-
-                            countOfProblems++;
-                            var chois = Lab1.random.Next(NotesNext[i].c--);
-                            //MessageBox.Show(chois+" chois from "+NotesNext[i].c--);
-                            //MessageBox.Show(ParticlesConc[i].Count + "");
-                            /*
-                            for (var u = 0; u < NotesNext[i].c; u++)
-                                ParticlesConc[i][u].loose = true;
-                                */
-                            ParticlesConc[i][chois].Current.Owner = null;
-                            ParticlesConc[i][chois].loose = false;
-                            NotesNext[i].Owner = ParticlesConc[i][chois];
-                            NotesNext[i].Owner.Current = NotesNext[i];
-                            NotesNext[i].Owner.Path.Add(NotesNext[i]);
-                            NotesNext[i].Owner.OKinerations++;
-                            GlobOKiterations++;
-
-
-
-                            /*
-                            for(var q = 0; q <= NotesNext[i].Near.Count - 1; q++)
-                            {
-                                if(NotesNext[i].Near[q].Owner!=null)
-                                {
-                                    NotesNext[i].Near[q].Owner.loose = true;
-                                }
-                            }
-                            */
-                            NotesNext[i].c = 0;
-                        }
-                    }
-                    else
-                        Particles[i].loose = true;
                 }
                 else
-                    Particles[i].loose = false;
+                {
+                    if (Particles[i].loose)
+                    {
+                        Particles[i].loose = false;
+                        //MessageBox.Show("loose" + Particles[i].color.ToString());
+                    }
+                }
+                    
+            }
+            
+           
+            for (var i = 0; i <= NotesNext.Count - 1; i++)
+            {
+
+              
+                if (NotesNext[i].Owner == null)
+                {
+                   
+                    if (NotesNext[i].c == 1)
+                    {
+                        
+                        NotesNext[i].Owner = ParticlesConc[i][0];
+                        ParticlesConc[i][0].Current.c = 0;
+                        ParticlesConc[i][0].Current.Owner = null;
+                        ParticlesConc[i][0].Current = NotesNext[i];
+                        ParticlesConc[i][0].Path.Add(NotesNext[i]);
+                        NotesNext[i].c = 0;
+                        ParticlesConc[i][0].OKinerations++;
+                        GlobOKiterations++;
+                    }
+                    else
+                    {
+                       
+                        countOfProblems++;
+                        var chois = Lab1.random.Next(NotesNext[i].c--);
+                        //MessageBox.Show(chois+" chois from "+NotesNext[i].c--);
+                        //MessageBox.Show(ParticlesConc[i].Count + "");
+                        
+                        for (var u = 0; u < NotesNext[i].c; u++)
+                            ParticlesConc[i][u].loose = true;
+                          
+                       
+                        ParticlesConc[i][chois].Current.Owner = null;
+                        ParticlesConc[i][chois].loose = false;
+                        NotesNext[i].Owner = ParticlesConc[i][chois];
+                       
+                        NotesNext[i].Owner.Current = NotesNext[i];
+                        NotesNext[i].Owner.Path.Add(NotesNext[i]);
+                        NotesNext[i].Owner.OKinerations++;
+                        GlobOKiterations++;
+
+
+
+                        /*
+                        for(var q = 0; q <= NotesNext[i].Near.Count - 1; q++)
+                        {
+                            if(NotesNext[i].Near[q].Owner!=null)
+                            {
+                                NotesNext[i].Near[q].Owner.loose = true;
+                            }
+                        }
+                        */
+                        NotesNext[i].c = 0;
+                    }
+                }
+               
                 /*
                 else
                 {
