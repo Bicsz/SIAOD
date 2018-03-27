@@ -413,26 +413,20 @@ namespace SIAOD_Labs
             if (curva.c > 1)
             {
                
-                ParticlesConc[ParticlesConc.Count - 1].Add(Particles[i]);
+                
 
-                /*
+                
                 for (var it = 0; it < NotesNext.Count; it++)
                 {
  
                     if (NotesNext[it].i == curva.i && NotesNext[it].j == curva.j)
                     {
 
-
-                        if (Particles[i].Current.i != ParticlesConc[it][ParticlesConc[it].Count - 2].Current.i ||
-                            Particles[i].Current.j != ParticlesConc[it][ParticlesConc[it].Count - 2].Current.j)
-                        {
-                            ParticlesConc[it].Add(Particles[i]);
-                            curva.c--;
-                        }
+                        ParticlesConc[it].Add(Particles[i]);
                         break;
                     }
                 }
-                */
+                
             }
           
         }
@@ -470,6 +464,7 @@ namespace SIAOD_Labs
             GlobOKiterations = 0;
             ParticlesConc = new List<List<Particle>>();
            
+
             NotesNext = new List<Note>();
             for (var i = 0; i <= Particles.Count - 1; i++)
             {
