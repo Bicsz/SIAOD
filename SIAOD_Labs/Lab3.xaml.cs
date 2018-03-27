@@ -21,7 +21,8 @@ namespace SIAOD_Labs
         public static List<Particle> Particles;
         List<Note> NotesNext;
         List<List<Particle>> ParticlesConc;
-        List<Particle> Wait;
+        List<int> notesNextCount;
+        
         int countCONST = 0;
         int iteration = 0;
         int GlobOKiterations = 0;
@@ -351,6 +352,7 @@ namespace SIAOD_Labs
         }
         */
         
+            
         Note makeNext(Note Curent, Note End,List<Note> Path)
         {
 
@@ -394,13 +396,15 @@ namespace SIAOD_Labs
             return Next;
         }
         
-        void makeNote(int i,  Note curva)
+        void makeNote(int i, ref Note curva)
         {
-            Particles[i].Next = curva;
+            
             curva.c++;
+            Particles[i].Next = curva;
+            
             if (curva.c == 1)
             {
-
+                
                 NotesNext.Add(curva);
                 ParticlesConc.Add(new List<Particle>());
                 ParticlesConc[ParticlesConc.Count - 1].Add(Particles[i]);
@@ -408,6 +412,7 @@ namespace SIAOD_Labs
             }
             if (curva.c > 1)
             {
+               
                 ParticlesConc[ParticlesConc.Count - 1].Add(Particles[i]);
 
                 /*
@@ -429,6 +434,7 @@ namespace SIAOD_Labs
                 }
                 */
             }
+          
         }
 
         private void way1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -463,6 +469,7 @@ namespace SIAOD_Labs
         {
             GlobOKiterations = 0;
             ParticlesConc = new List<List<Particle>>();
+           
             NotesNext = new List<Note>();
             for (var i = 0; i <= Particles.Count - 1; i++)
             {
@@ -500,6 +507,7 @@ namespace SIAOD_Labs
                         }
 
                         var curva = makeNext(Particles[i].Current, Particles[i].Finish, Particles[i].Path);
+                       // MessageBox.Show(Particles[i].Current.i+" "+ Particles[i].Current.j+"     "+ curva.i+" "+ curva.j);
                         if (curva.Owner != null)
                         {
                             /*
@@ -512,7 +520,7 @@ namespace SIAOD_Labs
 
                         }
                         else
-                            makeNote(i, curva);
+                            makeNote(i, ref curva);
 
                     }
 
@@ -548,37 +556,40 @@ namespace SIAOD_Labs
                     }
                     else
                     {
-                       
-                        countOfProblems++;
-                        var chois = Lab1.random.Next(NotesNext[i].c--);
-                        //MessageBox.Show(chois+" chois from "+NotesNext[i].c--);
-                        //MessageBox.Show(ParticlesConc[i].Count + "");
-                        
-                        for (var u = 0; u < NotesNext[i].c; u++)
-                            ParticlesConc[i][u].loose = true;
-                          
-                       
-                        ParticlesConc[i][chois].Current.Owner = null;
-                        ParticlesConc[i][chois].loose = false;
-                        NotesNext[i].Owner = ParticlesConc[i][chois];
-                       
-                        NotesNext[i].Owner.Current = NotesNext[i];
-                        NotesNext[i].Owner.Path.Add(NotesNext[i]);
-                        NotesNext[i].Owner.OKinerations++;
-                        GlobOKiterations++;
+                    
+                     countOfProblems++;
+                     var chois = Lab1.random.Next(NotesNext[i].c);
+                    //MessageBox.Show(chois+" chois from "+NotesNext[i].c--);
+                    //MessageBox.Show(ParticlesConc[i].Count + "");
+
+                    MessageBox.Show("concyretion "+ ParticlesConc[i][0].Current.i+" "+ParticlesConc[i][0].Current.j);
+                    MessageBox.Show("AND " + ParticlesConc[i][1].Current.i + " " + ParticlesConc[i][1].Current.j);
+                    MessageBox.Show("c = " + NotesNext[i].c + "   chis = " + chois);
+
+                     
+                     ParticlesConc[i][chois].Current.Owner = null;
+                     ParticlesConc[i][chois].loose = false;
+                     NotesNext[i].Owner = ParticlesConc[i][chois];
+
+                     NotesNext[i].Owner.Current = NotesNext[i];
+                     NotesNext[i].Owner.Path.Add(NotesNext[i]);
+                     NotesNext[i].Owner.OKinerations++;
+                     GlobOKiterations++;
 
 
 
-                        /*
-                        for(var q = 0; q <= NotesNext[i].Near.Count - 1; q++)
-                        {
-                            if(NotesNext[i].Near[q].Owner!=null)
-                            {
-                                NotesNext[i].Near[q].Owner.loose = true;
-                            }
-                        }
-                        */
-                        NotesNext[i].c--;
+                     /*
+                     for(var q = 0; q <= NotesNext[i].Near.Count - 1; q++)
+                     {
+                         if(NotesNext[i].Near[q].Owner!=null)
+                         {
+                             NotesNext[i].Near[q].Owner.loose = true;
+                         }
+                     }
+                     */
+
+                    NotesNext[i].c=0;
+                    
                     }
                 
                
@@ -600,7 +611,7 @@ namespace SIAOD_Labs
             iteration++;
             var nado = false;
             await Task.Delay(300);
-            MessageBox.Show("");
+          
             var gogo = new ThicknessAnimation();
             for (var i = 0; i <= Particles.Count - 1; i++)
             {
@@ -612,8 +623,7 @@ namespace SIAOD_Labs
                 //Particles[i].Iam.Margin = new Thickness(Particles[i].Current.x - 5, Particles[i].Current.y - 5, 0, 0);
                 if ((Particles[i].Finish.i != Particles[i].Current.i || Particles[i].Finish.j != Particles[i].Current.j) && !nado)
                     nado = true;
-                else
-                    MessageBox.Show(Particles[i].color.ToString());
+                
 
 
             }
