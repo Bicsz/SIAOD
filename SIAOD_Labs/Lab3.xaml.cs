@@ -21,7 +21,7 @@ namespace SIAOD_Labs
         public static List<Particle> Particles;
         List<Note> NotesNext;
         List<List<Particle>> ParticlesConc;
-        List<Particle> Wait;
+       
         int countCONST = 0;
         int iteration = 0;
         int GlobOKiterations = 0;
@@ -339,18 +339,27 @@ namespace SIAOD_Labs
             {
                 ok = true;
                 dist = Math.Sqrt(Math.Pow(End.x - Curent.Near[i].x, 2) + Math.Pow(End.y - Curent.Near[i].y, 2));
+                
                 if(Path.Count>=2)
                     if (Curent.Near[i].i == Path[Path.Count-2].i && Curent.Near[i].j == Path[Path.Count-2].j)
                         ok = false;
+                        
                 if (Curent.Near[i].Owner != null)
-                {
-                    if (Curent.Near[i].Owner.Next.i == Curent.i && Curent.Near[i].Owner.Next.j == Curent.j)
-                        ok = false;
-                    if (Curent.Near[i].Owner.Current.i == Curent.Near[i].Owner.Finish.i && Curent.Near[i].Owner.Current.j == Curent.Near[i].Owner.Finish.j)
-                        ok = false;
-                    
-                }
-                for(var o = 0; o<=Particles.Count-1;o++)
+                    ok = false;
+                
+                    if ( Curent.Near[i].c != 0)
+                    ok = false;
+
+
+                /*
+                if (Curent.Near[i].Owner.Next.i == Curent.i && Curent.Near[i].Owner.Next.j == Curent.j)
+                    ok = false;
+                if (Curent.Near[i].Owner.Current.i == Curent.Near[i].Owner.Finish.i && Curent.Near[i].Owner.Current.j == Curent.Near[i].Owner.Finish.j)
+                    ok = false;
+                    */
+
+
+                for (var o = 0; o<=Particles.Count-1;o++)
                 {
                     if(Particles[o].Delay>iteration && Particles[o].Delay-1==iteration)
                         if(Particles[o].Current.i == Curent.Near[i].i && Particles[o].Current.j == Curent.Near[i].j)
@@ -554,7 +563,7 @@ namespace SIAOD_Labs
                             }
                         }
                         */
-                        NotesNext[i].c--;
+                        NotesNext[i].c=0;
                     }
                 
                
