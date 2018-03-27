@@ -328,6 +328,29 @@ namespace SIAOD_Labs
              makeIterationAsync();
         }
 
+        /* very simple makeNext bat bags was leave
+        Note makeNext(Note Curent, Note End, List<Note> Path)
+        {
+
+            var min = double.PositiveInfinity;
+            var dist = 0.0;
+            var Next = new Note();
+            for (var i = 0; i < Curent.Near.Count; i++)
+            {
+                dist = Math.Sqrt(Math.Pow(End.x - Curent.Near[i].x, 2) + Math.Pow(End.y - Curent.Near[i].y, 2));
+
+                if (dist < min)
+                {
+                    min = dist;
+                    Next = Curent.Near[i];
+                }
+                // MessageBox.Show(Curent.Near[i].i+"-"+ Curent.Near[i].j+"             " + Next.i+" "+ Next.j+" dist = "+min);
+            }
+
+            return Next;
+        }
+        */
+        
         Note makeNext(Note Curent, Note End,List<Note> Path)
         {
 
@@ -370,6 +393,7 @@ namespace SIAOD_Labs
 
             return Next;
         }
+        
         void makeNote(int i,  Note curva)
         {
             Particles[i].Next = curva;
@@ -576,9 +600,11 @@ namespace SIAOD_Labs
             iteration++;
             var nado = false;
             await Task.Delay(300);
+            MessageBox.Show("");
             var gogo = new ThicknessAnimation();
             for (var i = 0; i <= Particles.Count - 1; i++)
             {
+                
                 //MessageBox.Show(Particles[i].Current.i+" "+ Particles[i].Current.j);
                 //Lab1.DrawNote(Particles[i].Current.x, Particles[i].Current.y,Particles[i].color, t);
                 gogo = new ThicknessAnimation(Particles[i].Iam.Margin, new Thickness(Particles[i].Current.x - 5, Particles[i].Current.y - 5, 0, 0), new Duration(TimeSpan.FromSeconds(0.3)));
@@ -586,8 +612,10 @@ namespace SIAOD_Labs
                 //Particles[i].Iam.Margin = new Thickness(Particles[i].Current.x - 5, Particles[i].Current.y - 5, 0, 0);
                 if ((Particles[i].Finish.i != Particles[i].Current.i || Particles[i].Finish.j != Particles[i].Current.j) && !nado)
                     nado = true;
+                else
+                    MessageBox.Show(Particles[i].color.ToString());
 
-                
+
             }
             var srPartSpeed = 0.0;
             var coPart = 0;
@@ -597,24 +625,37 @@ namespace SIAOD_Labs
                     srPartSpeed += Particles[t].OKinerations+ Particles[t].Delay;
                     coPart++;
                 }
-            srPartSpeed = srPartSpeed / iteration/coPart;
-            Lspeed.Content = (GlobOKiterations / coPart)+"";
+
+            try
+            {
+                srPartSpeed = srPartSpeed / iteration / coPart;
+                Lspeed.Content = (GlobOKiterations / coPart) + "";
+            }
+            catch
+            {
+                srPartSpeed = 0;
+                Lspeed.Content = 0;
+            }
             Lproblem.Content = countOfProblems+"";
 
-           
-
+            
+            Lspeed_Copy.Content = iteration + "";
             var textFile = new StreamWriter(path3,true);
             textFile.WriteLine("LOG-----ITERATION " + (iteration - 1) + "------------------------");
             textFile.WriteLine("    Текущая скорость по сетке = " + Lspeed.Content);
             textFile.WriteLine("    Средняя скорость по сетке = " + srPartSpeed);
             textFile.WriteLine("    Колтчество столкновений   = " + countOfProblems);
             textFile.Close();
-            if (nado)
-                await makeIterationAsync();
-            else
+            
+            if (!nado)
             {
                 way1.IsEnabled = true;
-               
+            }
+            else
+            {
+
+                await makeIterationAsync();
+
             }
             
             

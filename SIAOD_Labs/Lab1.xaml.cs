@@ -281,7 +281,8 @@ namespace SIAOD_Labs
                 txt += "  owner = " + MyNote.Owner.Iam.Fill.ToString();
                 txt += "\n  owner loose = " + MyNote.Owner.loose.ToString();
                 txt += "\n  owner Next = " + MyNote.Owner.Next.i + " " + MyNote.Owner.Next.j;
-                txt +="\n  owner Cerrent = "+MyNote.Owner.Current.i+" "+MyNote.Owner.Current.j;
+                txt += "\n  owner Cerrent = " + MyNote.Owner.Current.i + " " + MyNote.Owner.Current.j;
+                txt += "\n\n  owner Finish = " + MyNote.Owner.Finish.i + " " + MyNote.Owner.Finish.j;
             }
             else
                 txt += "owner = null";

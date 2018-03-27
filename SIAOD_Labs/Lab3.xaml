@@ -43,6 +43,8 @@
         <Label Content="Средняя скорость" Grid.Column="1" HorizontalAlignment="Left" Margin="87,241,0,0" VerticalAlignment="Top" Width="116"/>
         <Label x:Name="Lproblem" Content="0" Grid.Column="1" HorizontalAlignment="Left" Margin="94,352,0,0" VerticalAlignment="Top" Width="130" Height="54" Background="#FFD1D1D1" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.RowSpan="2"/>
         <Label Content="Количество столкновений" Grid.Column="1" HorizontalAlignment="Left" Margin="87,326,0,0" VerticalAlignment="Top" Width="163"/>
+        <Label x:Name="Lspeed_Copy" Content="0" Grid.Column="1" HorizontalAlignment="Left" Margin="96,93,0,0" VerticalAlignment="Top" Width="137" Height="36" Background="#FFD1D1D1" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="Iteration" Grid.Column="1" HorizontalAlignment="Left" Margin="93,67,0,0" VerticalAlignment="Top" Width="116"/>
 
     </Grid>
 </Page>
